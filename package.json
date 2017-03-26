@@ -1,0 +1,27 @@
+{
+  "name": "war-of-tanks-demo",
+  "version": "1.0.0",
+  "description": "Repo demo of Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "Haha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inuyashaaa/war-of-tanks-demo.git"
+  },
+  "author": "illuminati",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inuyashaaa/war-of-tanks-demo/issues"
+  },
+  "homepage": "https://github.com/inuyashaaa/war-of-tanks-demo#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-inject": "^4.2.0",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-uglify": "^2.1.2"
+  }
+}
