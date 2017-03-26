@@ -24,6 +24,7 @@ function preload() {
     Tank.game.load.image('nhachinh', 'assets/images/base.png');
 
     Tank.game.load.image('tank1', 'assets/images/tank_player1_up_c0_t1.png');
+    Tank.game.load.image('bullet_left', 'assets/images/bullet_left.png');
 }
 
 var map;
@@ -41,8 +42,10 @@ function create() {
     Tank.layer.resizeWorld();
 
     Tank.playerGroup = Tank.game.add.physicsGroup();
+    Tank.bulletGroup = Tank.game.add.physicsGroup();
 
     Tank.players = [];
+    Tank.bullets = [];
     Tank.players.push(
         new TankController(
             Tank.configs.PLAYER1_POS.x,
@@ -52,7 +55,8 @@ function create() {
                 down: Phaser.Keyboard.DOWN,
                 left: Phaser.Keyboard.LEFT,
                 right: Phaser.Keyboard.RIGHT,
-                fire: Phaser.Keyboard.SPACEBAR
+                fire: Phaser.Keyboard.SPACEBAR,
+                cooldown: 0.3
             }
         )
     );
@@ -60,12 +64,21 @@ function create() {
 }
 
 function update() {
-
+    Tank.game.physics.arcade.collide(Tank.playerGroup, Tank.layer);
     Tank.players.forEach(
         function(ship) {
             ship.update();
         }
     );
+    Tank.bullets.forEach(function(bullet) {
+            if (bullet.update && typeof bullet.update == "function") {
+                bullet.update();
+            }
+        }
+    );
+}
+function render() {
 
-    Tank.game.physics.arcade.collide(Tank.playerGroup, Tank.layer);
+    Tank.game.debug.body(Tank.players);
+
 }
