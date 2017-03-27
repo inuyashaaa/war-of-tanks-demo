@@ -1,11 +1,12 @@
 class BulletController {
     constructor(position, direction, bulletName) {
 
-        this.sprite = Tank.bulletGroup.create(position.x, position.y, "bullet_left");
+        this.sprite = Tank.bulletGroup.create(position.x, position.y, "bullet_up");
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
         this.sprite.checkWorldBounds = true;
         this.sprite.outOfBoundsKill = true;
         this.sprite.angleOffset = 90;
+        this.sprite.angle = (Math.atan(direction.x / -direction.y)*180/3.14);
         this.sprite.body.velocity = direction.setMagnitude(BulletController.BULLET_SPEED);
         Tank.bullets.push(this);
     }

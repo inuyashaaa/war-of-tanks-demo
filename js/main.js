@@ -24,7 +24,7 @@ function preload() {
     Tank.game.load.image('trees', 'assets/images/trees.png');
     Tank.game.load.image('water_1', 'assets/images/water_1.png');
     Tank.game.load.image('tank1', 'assets/images/tank_player1_up_c0_t1.png');
-    Tank.game.load.image('bullet_left', 'assets/images/bullet_left.png');
+    Tank.game.load.image('bullet_up', 'assets/images/bullet_up.png');
 }
 
 var map;
@@ -42,8 +42,9 @@ function create() {
     Tank.layer = Tank.map.createLayer('Tile Layer 1');
     Tank.layer.resizeWorld();
 
-    Tank.playerGroup = Tank.game.add.physicsGroup();
     Tank.bulletGroup = Tank.game.add.physicsGroup();
+    Tank.playerGroup = Tank.game.add.physicsGroup();
+
     Tank.bullets = [];
     Tank.players = [];
 
@@ -66,6 +67,7 @@ function create() {
 
 function update() {
     Tank.game.physics.arcade.collide(Tank.playerGroup, Tank.layer);
+    Tank.game.physics.arcade.collide(Tank.bulletGroup, Tank.layer);
     Tank.players.forEach(
         function(ship) {
             ship.update();
