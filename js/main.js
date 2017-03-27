@@ -25,10 +25,12 @@ function preload() {
     Tank.game.load.image('water_1', 'assets/images/water_1.png');
     Tank.game.load.image('tank1', 'assets/images/tank_player1_up_c0_t1.png');
     Tank.game.load.image('bullet_up', 'assets/images/bullet_up.png');
+    Tank.game.load.audio('bullet_hit_1','assets/sound/bullet_shot.ogg');
 }
 
 var map;
 var layer;
+var hit;
 
 function create() {
     Tank.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -41,7 +43,7 @@ function create() {
     Tank.map.setCollisionBetween(1, 12);
     Tank.layer = Tank.map.createLayer('Tile Layer 1');
     Tank.layer.resizeWorld();
-
+    hit = Tank.game.add.audio('bullet_hit_1');
     Tank.bulletGroup = Tank.game.add.physicsGroup();
     Tank.playerGroup = Tank.game.add.physicsGroup();
 

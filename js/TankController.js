@@ -11,10 +11,14 @@ class TankController {
         this.sprite.body.angularDrag = 50;
         this.configs = configs;
         this.timeSinceLastFire = 0;
+
     }
 
     update() {
         //Thiet lap viec di chuyen cua tank
+
+
+
         if (Tank.keyboard.isDown(this.configs.up)) {
             this.sprite.body.velocity.y = -TankController.TANK_SPEED;
         } else if (Tank.keyboard.isDown(this.configs.down)) {
@@ -46,6 +50,7 @@ class TankController {
     }
     fire() {
         this.createBullet(new Phaser.Point(0, -1));
+        hit.play();
     }
     createBullet(direction) {
         new BulletController(
@@ -55,4 +60,4 @@ class TankController {
     }
 }
 
-TankController.TANK_SPEED = 50;
+TankController.TANK_SPEED = 100;
