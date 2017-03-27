@@ -4,11 +4,6 @@ class TankController {
         this.sprite.anchor = new Phaser.Point(0.5, 0.5);
         this.sprite.body.collideWorldBounds = true;
         this.sprite.body.setSize(32, 32, 0, 0);
-        //  We'll set a lower max angular velocity here to keep it from going totally nuts
-        this.sprite.body.maxAngular = 500;
-
-        //  Apply a drag otherwise the sprite will just spin and never slow down
-        this.sprite.body.angularDrag = 50;
         this.configs = configs;
         this.timeSinceLastFire = 0;
 

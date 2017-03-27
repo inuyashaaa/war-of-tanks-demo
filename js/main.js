@@ -18,11 +18,11 @@ window.onload = function() {
 };
 
 function preload() {
-    Tank.game.load.tilemap('map', 'assets/map2.json', null, Phaser.Tilemap.TILED_JSON);
+    Tank.game.load.tilemap('map', 'assets/test.json', null, Phaser.Tilemap.TILED_JSON);
     Tank.game.load.image('wall_brick', 'assets/images/wall_brick.png');
     Tank.game.load.image('wall_steel', 'assets/images/wall_steel.png');
-    Tank.game.load.image('trees', 'assets/images/trees.png');
-    Tank.game.load.image('water_1', 'assets/images/water_1.png');
+    // Tank.game.load.image('trees', 'assets/images/trees.png');
+    // Tank.game.load.image('water_1', 'assets/images/water_1.png');
     Tank.game.load.image('tank1', 'assets/images/tank_player1_up_c0_t1.png');
     Tank.game.load.image('bullet_up', 'assets/images/bullet_up.png');
     Tank.game.load.audio('bullet_hit_1','assets/sound/bullet_shot.ogg');
@@ -32,20 +32,29 @@ var map;
 var layer;
 var hit;
 
+var wall_steelLayer;
+var wall_brickLayer;
 function create() {
     Tank.game.physics.startSystem(Phaser.Physics.ARCADE);
     Tank.keyboard = Tank.game.input.keyboard;
+    Tank.bulletGroup = Tank.game.add.physicsGroup();
+    Tank.playerGroup = Tank.game.add.physicsGroup();
+    Tank.wallGroup = Tank.game.add.physicsGroup();
+    Tank.wallGroup.enableBody = true;
+
     Tank.map = Tank.game.add.tilemap('map');
     Tank.map.addTilesetImage('wall_brick');
     Tank.map.addTilesetImage('wall_steel');
-    Tank.map.addTilesetImage('trees');
-    Tank.map.addTilesetImage('water_1');
+
     Tank.map.setCollisionBetween(1, 12);
-    Tank.layer = Tank.map.createLayer('Tile Layer 1');
-    Tank.layer.resizeWorld();
     hit = Tank.game.add.audio('bullet_hit_1');
     Tank.bulletGroup = Tank.game.add.physicsGroup();
     Tank.playerGroup = Tank.game.add.physicsGroup();
+    // Tank.map.setCollisionBetween(1, 12);
+    Tank.wall_steelLayer = Tank.map.createLayer('wall_stell Layer');
+    Tank.wall_brickLayer = Tank.map.createLayer('wall_brick Layer', 960, 640, Tank.wallGroup);
+    Tank.wall_steelLayer.resizeWorld();
+    Tank.wall_brickLayer.resizeWorld();
 
     Tank.bullets = [];
     Tank.players = [];
@@ -68,8 +77,9 @@ function create() {
 }
 
 function update() {
-    Tank.game.physics.arcade.collide(Tank.playerGroup, Tank.layer);
-    Tank.game.physics.arcade.collide(Tank.bulletGroup, Tank.layer);
+    Tank.game.physics.arcade.collide(Tank.playerGroup, Tank.wall_steelLayer);
+    Tank.game.physics.arcade.collide(Tank.playerGroup, Tank.wallGroup);
+    // Tank.game.physics.arcade.collide(Tank.bulletGroup, Tank.layer);
     Tank.players.forEach(
         function(ship) {
             ship.update();
@@ -81,9 +91,20 @@ function update() {
             }
         }
     );
+
+    Tank.game.physics.arcade.overlap(
+        Tank.bulletGroup,
+        Tank.wallGroup,
+        onBulletHitWall
+    );
 }
 function render() {
 
     Tank.game.debug.body(Tank.players);
 
 }
+
+var onBulletHitWall = function(bulletSprite, wallBrick) {
+    wallBrick.kill();
+    bulletSprite.kill();
+};
