@@ -5,12 +5,12 @@ Tank.configs = {
     GAME_WIDTH: 800,
     GAME_HIGHT: 600,
     PLAYER1_POS: {
-        x: 0,
-        y: 0
+        x: 64,
+        y: 64
     },
 };
 window.onload = function() {
-    Tank.game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
+    Tank.game = new Phaser.Game(960, 640, Phaser.AUTO, '', {
         preload: preload,
         create: create,
         update: update
@@ -18,11 +18,11 @@ window.onload = function() {
 };
 
 function preload() {
-    Tank.game.load.tilemap('map', 'assets/map1.json', null, Phaser.Tilemap.TILED_JSON);
-    Tank.game.load.image('gach', 'assets/images/wall_brick.png');
-    Tank.game.load.image('da', 'assets/images/wall_steel.png');
-    Tank.game.load.image('nhachinh', 'assets/images/base.png');
-
+    Tank.game.load.tilemap('map', 'assets/map2.json', null, Phaser.Tilemap.TILED_JSON);
+    Tank.game.load.image('wall_brick', 'assets/images/wall_brick.png');
+    Tank.game.load.image('wall_steel', 'assets/images/wall_steel.png');
+    Tank.game.load.image('trees', 'assets/images/trees.png');
+    Tank.game.load.image('water_1', 'assets/images/water_1.png');
     Tank.game.load.image('tank1', 'assets/images/tank_player1_up_c0_t1.png');
     Tank.game.load.image('bullet_left', 'assets/images/bullet_left.png');
 }
@@ -34,18 +34,19 @@ function create() {
     Tank.game.physics.startSystem(Phaser.Physics.ARCADE);
     Tank.keyboard = Tank.game.input.keyboard;
     Tank.map = Tank.game.add.tilemap('map');
-    Tank.map.addTilesetImage('gach');
-    Tank.map.addTilesetImage('da');
-    Tank.map.addTilesetImage('nhachinh');
+    Tank.map.addTilesetImage('wall_brick');
+    Tank.map.addTilesetImage('wall_steel');
+    Tank.map.addTilesetImage('trees');
+    Tank.map.addTilesetImage('water_1');
     Tank.map.setCollisionBetween(1, 12);
     Tank.layer = Tank.map.createLayer('Tile Layer 1');
     Tank.layer.resizeWorld();
 
     Tank.playerGroup = Tank.game.add.physicsGroup();
     Tank.bulletGroup = Tank.game.add.physicsGroup();
-
-    Tank.players = [];
     Tank.bullets = [];
+    Tank.players = [];
+
     Tank.players.push(
         new TankController(
             Tank.configs.PLAYER1_POS.x,
