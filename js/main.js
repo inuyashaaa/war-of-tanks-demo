@@ -21,10 +21,13 @@ function preload() {
     Tank.game.load.tilemap('map', 'assets/test.json', null, Phaser.Tilemap.TILED_JSON);
     Tank.game.load.image('wall_brick', 'assets/images/wall_brick.png');
     Tank.game.load.image('wall_steel', 'assets/images/wall_steel.png');
+
     // Tank.game.load.image('trees', 'assets/images/trees.png');
     // Tank.game.load.image('water_1', 'assets/images/water_1.png');
-    Tank.game.load.image('tank1', 'assets/images/tank_player1_up_c0_t1.png');
+    Tank.game.load.spritesheet('tank1', 'assets/images/tank_animation.png', 26, 25);
+
     Tank.game.load.image('bullet_up', 'assets/images/bullet_up.png');
+
     Tank.game.load.audio('bullet_hit_1','assets/sound/bullet_shot.ogg');
 }
 
